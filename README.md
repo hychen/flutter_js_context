@@ -29,21 +29,23 @@ flutter pub add flutter_js_context
 
 ## Usage
 
-```
+```dart
 import 'package:flutter_js_context/flutter_js_context.dart';
 
-final context = JsContext();
+void main() {
+  final context = JsContext();
 
-JsRef myvar = JsRef.define(context, 'myvar', '1');
+  JsRef obj = JsRef.define(context, 'myvar', '1');
 
-// equals 'var myvar = 4;' in JavaScript.
-myvar.update("4");
+  // equals 'var myvar[ref.key] = 4;' in JavaScript.
+  obj.update("4");
 
-// plus 4 in javascript.
-context.evaluate("${ref}.toJsCode() + 4"); // 8
+  // plus 4 in javascript.
+  context.evaluate("${obj.toJsCode()} + 4"); // 8
 
-// plus javascript value in dart.
-myvar.value + 4 // 12
+  // plus javascript value in dart.
+  print(obj.value + 4); // 12
+}
 ```
 
 See more usage in the test.
