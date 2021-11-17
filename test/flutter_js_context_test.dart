@@ -6,7 +6,7 @@ void main() {
     test('define', () {
       final ctx = JsContext();
       final ref = JsRef.define(ctx, 'databases', "2");
-      //expect(ref.value, 2);
+      expect(ref.value, 2);
     });
 
     test('update', () {
@@ -26,7 +26,6 @@ void main() {
   group('JsContext', () {
     test('initialise global variables', () {
       final ctx = JsContext();
-      print(ctx.key);
       expect(ctx.isVarDefined('window'), true);
       expect(ctx.isVarDefined('global'), true);
       expect(ctx.isVarDefined(ctx.stateVarName), true);
