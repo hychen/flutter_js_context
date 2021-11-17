@@ -29,8 +29,9 @@ class JsRef {
   /// Defines a reference with a {updater} that change the value.
   /// the updater is a pure Javascript string.
   factory JsRef.define(JsContext context, String ns, String updater) {
-    if(!context.isVarDefined(ns)) {
-      context.evaluate("${context.stateVarName}['$ns'] = {}");
+    if(!context.isVarDefined(context.nsToJsCode(ns))) {
+      debugPrint("Tracks variable $ns in JsContext.");
+      context.evaluate("${context.nsToJsCode(ns)} = {};");
     }
     final ref = JsRef.generate(context, ns);
     ref.update(updater);
@@ -85,6 +86,10 @@ class JsContext {
   }
 
   String get stateVarName => "state$key";
+
+  String nsToJsCode(String ns) {
+    return "$stateVarName['$ns']";
+  }
 
   /// Returns true if the name is defined in JavaScript runtime.
   bool isVarDefined(String name) {
