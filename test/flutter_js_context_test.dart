@@ -32,6 +32,12 @@ void main() {
       expect(ctx.isVarDefined(ctx.stateVarName), true);
     });
 
+    test('isVarDefined', () {
+      final ctx = JsContext();
+      expect(ctx.isVarDefined('ranmdomvar'), false);
+      expect(ctx.isVarDefined('vendor.test'), false);
+    });
+
     test('evaluate()', () {
       final ctx = JsContext();
       expect(ctx.evaluate("true"), true);

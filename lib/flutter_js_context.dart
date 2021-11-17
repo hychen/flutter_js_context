@@ -1,6 +1,7 @@
 /// Enhances the interoperability between Dart and flutter_js.
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_js/flutter_js.dart';
 import 'package:short_uuids/short_uuids.dart';
 
@@ -88,7 +89,11 @@ class JsContext {
   /// Returns true if the name is defined in JavaScript runtime.
   bool isVarDefined(String name) {
     String used = runtime.evaluate("""
-    (typeof $name === 'undefined') ? 0 : 1;
+    try {
+      (typeof $name === 'undefined') ? 0 : 1;
+    } catch(e) {
+      0;
+    }
     """).stringResult;
     return used == '0' ? false : true;
   }
@@ -113,14 +118,19 @@ class JsContext {
   /// Requires a js file.
   void require(String fname, List namespaces) {
     if(!namespaces.every((element) => isVarDefined(element))) {
+      debugPrint("Loading $fname ...");
       JsEvalResult result = runtime.evaluate(File(fname).readAsStringSync());
       assert(
       !result.isError && namespaces.every((element) => isVarDefined(element)),
       "loading $fname failed");
+    } else {
+      debugPrint("$fname is already loaded");
     }
   }
 }
 
+/// Converts all elements in a list to the literal in JavaScript. Use actual
+/// variable if the element is a [JsRef].
 List<String> toJsCode(List x) {
   return x.map((e) {
     if (e.runtimeType == JsRef) {
