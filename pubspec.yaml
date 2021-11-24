@@ -1,7 +1,7 @@
 name: flutter_js_context
 description: Enhances the interoperability between Dart and flutter_js.
-version: 0.0.1
-homepage:
+version: 0.1
+homepage: https://github.com/hychen/flutter_js_context
 
 environment:
   sdk: ">=2.14.0 <3.0.0"
