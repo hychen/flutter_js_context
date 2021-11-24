@@ -18,12 +18,12 @@ This package enhances the interoperability between Dart and [flutter_js](https:/
 Use this package to
 
 - Track which variables are defined.
-- Decode evaluated results that the type are assumed as JSON always.
+- Decode evaluated results that the type is assumed as JSON always.
 - Load JavaScript file properly.
 
 ## Getting started
 
-```dart
+```shell
 flutter pub add flutter_js_context
 ```
 
@@ -40,12 +40,14 @@ void main() {
   // equals 'var myvar[ref.key] = 4;' in JavaScript.
   obj.update("4");
 
-  // plus 4 in javascript.
+  // plus the object's value which is 4 and 4 in javascript runtime.
   context.evaluate("${obj.toJsCode()} + 4"); // 8
 
-  // plus javascript value in dart.
+  // plus the object's value which is 8 and 4 in dart.
   print(obj.value + 4); // 12
 }
 ```
 
-See more usage in the test.
+See `test` for more usage.
+
+## 
