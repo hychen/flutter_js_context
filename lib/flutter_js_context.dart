@@ -29,7 +29,7 @@ class JsRef {
   /// Defines a reference with a {updater} that change the value.
   /// the updater is a pure Javascript string.
   factory JsRef.define(JsContext context, String ns, String updater) {
-    if(!context.isVarDefined(context.nsToJsCode(ns))) {
+    if (!context.isVarDefined(context.nsToJsCode(ns))) {
       debugPrint("Tracks variable $ns in JsContext.");
       context.evaluate("${context.nsToJsCode(ns)} = {};");
     }
@@ -122,12 +122,13 @@ class JsContext {
 
   /// Requires a js file.
   void require(String fname, List namespaces) {
-    if(!namespaces.every((element) => isVarDefined(element))) {
+    if (!namespaces.every((element) => isVarDefined(element))) {
       debugPrint("Loading $fname ...");
       JsEvalResult result = runtime.evaluate(File(fname).readAsStringSync());
       assert(
-      !result.isError && namespaces.every((element) => isVarDefined(element)),
-      "loading $fname failed");
+          !result.isError &&
+              namespaces.every((element) => isVarDefined(element)),
+          "loading $fname failed");
     } else {
       debugPrint("$fname is already loaded");
     }
